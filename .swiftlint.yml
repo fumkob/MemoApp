@@ -1,0 +1,8 @@
+excluded:
+ - Pods
+ - Carthage
+ - vendor/bundle
+ - fastlane
+ - MemoApp/SceneDelegate.swift
+ - MemoApp/AppDelegate.swift
+line_length: 300
