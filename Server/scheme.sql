@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS memodb;
+CREATE TABLE `memos` (
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+	`memo` varchar(100) NOT NULL,
+	`created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
