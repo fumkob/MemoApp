@@ -17,15 +17,11 @@
 		A511BE2E249C4DC100D855B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A511BE2C249C4DC100D855B1 /* LaunchScreen.storyboard */; };
 		A511BE39249C4DC100D855B1 /* MemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A511BE38249C4DC100D855B1 /* MemoAppTests.swift */; };
 		A511BE44249C4DC100D855B1 /* MemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A511BE43249C4DC100D855B1 /* MemoAppUITests.swift */; };
-		A51B5A2824A32275006F4450 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A511BE25249C4DBF00D855B1 /* ViewController.swift */; };
 		A51B5A3124A342AE006F4450 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51B5A3024A342AE006F4450 /* DateExtension.swift */; };
 		A51B5A3324A35559006F4450 /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51B5A3224A35559006F4450 /* AlertExtension.swift */; };
 		A5C568C2249CABCC0042DD6B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C1249CABCC0042DD6B /* ViewModel.swift */; };
-		A5C568C3249CABCC0042DD6B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C1249CABCC0042DD6B /* ViewModel.swift */; };
 		A5C568C5249CABE80042DD6B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C4249CABE80042DD6B /* APIClient.swift */; };
-		A5C568C6249CABE80042DD6B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C4249CABE80042DD6B /* APIClient.swift */; };
 		A5C568C8249CAC0C0042DD6B /* MemoContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C7249CAC0C0042DD6B /* MemoContents.swift */; };
-		A5C568C9249CAC0C0042DD6B /* MemoContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568C7249CAC0C0042DD6B /* MemoContents.swift */; };
 		A5C568CE249CB1930042DD6B /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C568CD249CB1930042DD6B /* CustomButton.swift */; };
 		FCBDE4CAB079B1051196940B /* Pods_MemoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C08F6B30C4BC91155854B35 /* Pods_MemoAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -505,11 +501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51B5A2824A32275006F4450 /* ViewController.swift in Sources */,
-				A5C568C3249CABCC0042DD6B /* ViewModel.swift in Sources */,
-				A5C568C9249CAC0C0042DD6B /* MemoContents.swift in Sources */,
 				A511BE39249C4DC100D855B1 /* MemoAppTests.swift in Sources */,
-				A5C568C6249CABE80042DD6B /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
