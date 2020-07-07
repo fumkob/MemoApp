@@ -12,7 +12,7 @@ import SwiftyJSON
 import RxSwift
 import RxCocoa
 
-public class APIClient {
+open class APIClient {
     
     enum APIError: Error {
         case postToServer
@@ -20,7 +20,7 @@ public class APIClient {
     }
     
     let alamofire = AF
-    public func getData(url: URL) -> Single<[MemoContents]> {
+    open func getData(url: URL) -> Single<[MemoContents]> {
         return .create {observer in
             var urlRequest = URLRequest(url: url)
             urlRequest.timeoutInterval = 5.0
@@ -39,7 +39,7 @@ public class APIClient {
         }
     }
     
-    public func postData(url: URL, memo: String) -> Single<Any> {
+    open func postData(url: URL, memo: String) -> Single<JSON> {
         return .create {observer in
             let headers: HTTPHeaders = ["Contenttype" : "application/json"]
             let parameters: [String: Any] = ["memo": memo]
@@ -51,7 +51,7 @@ public class APIClient {
                 switch response.result {
                 //成功
                 case .success(let value) :
-                    observer(.success(value))
+                    observer(.success(JSON(value)))
                 //失敗
                 case .failure:
                     observer(.error(APIError.postToServer))

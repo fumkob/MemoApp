@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 connection.connect();
 
 //DBから取得->JSON出力
-app.get('/get', function(req, res) {
+app.get('/memos', function(req, res) {
     connection.query('SELECT * FROM memos ORDER BY created DESC LIMIT 100;', function(error,results,fields) {
         if (error) throw error;
         res.send(results);
@@ -22,7 +22,7 @@ app.get('/get', function(req, res) {
 });
 
 //JSON入力->DBへ投稿
-app.post('/post', function(req, res) {
+app.post('/memos', function(req, res) {
     const memo = req.body.memo;
     
     connection.query('INSERT INTO memos(memo) VALUES(?);',[memo], function(error, results, fields) {

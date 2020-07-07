@@ -11,12 +11,6 @@ import RxSwift
 import RxCocoa
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
-    enum AlertType: Int {
-        case postSucceeded
-        case postFailed
-        case getFailed
-    }
     
     @IBOutlet weak var postTextField: UITextField!
     @IBOutlet weak var postButton: CustomButton!
@@ -57,20 +51,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let indicatorStatus = self.viewModel.indicatorStatus
         indicatorStatus
             .drive(onNext: {[weak self] in
-                if $0 {
-                    self?.activityIndicator.startAnimating()
-                    self?.postButton.isEnabled = false
-                    self?.postButton.backgroundColor = .systemGray5
-                    self?.loadButton.isEnabled = false
-                    self?.loadButton.backgroundColor = .systemGray5
-                } else {
-                    self?.activityIndicator.stopAnimating()
-                    self?.postButton.isEnabled = true
-                    self?.postButton.backgroundColor = .none
-                    self?.loadButton.isEnabled = true
-                    self?.loadButton.backgroundColor = .none
-                }
-            })
+                ($0 ? self?.activityIndicator.startAnimating : self?.activityIndicator.stopAnimating)?()
+                self?.postButton.isEnabled = !$0
+                self?.postButton.backgroundColor = $0 ? .systemGray5 : .none
+                self?.loadButton.isEnabled = !$0
+                self?.loadButton.backgroundColor = $0 ? .systemGray5 : .none
+                })
             .disposed(by: disposeBag)
     }
     //投稿orエラー時アラート設定
@@ -78,18 +64,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         viewModel.alerts
             .drive(onNext: {[weak self] alertType in
                 switch alertType {
-                case AlertType.postSucceeded.rawValue :
+                case .memoSaved :
                     let alert = UIAlertController.okAlert(title: "Post Succeeded", message: "やったね")
                     self?.present(alert, animated: true, completion: nil)
-                case AlertType.postFailed.rawValue :
+                case .postError :
                     let alert = UIAlertController.okAlert(title: "Post Failed", message: "Please try again")
                     self?.present(alert, animated: true, completion: nil)
-                case AlertType.getFailed.rawValue :
+                case .getError :
                     let alert = UIAlertController.okAlert(title: "Load Failed", message: "Please try again")
-                    self?.present(alert, animated: true, completion: nil)
-                default:
-                    fatalError("Unexpected AlertType received")
-                }
+                    self?.present(alert, animated: true, completion: nil)                }
             })
             .disposed(by: disposeBag)
     }
@@ -99,7 +82,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             .subscribe(onNext: {[weak self] in
                 self?.postTextField.endEditing(true)
                 guard let memo = self?.postTextField.text else {
-                    fatalError("memo is nill")}
+                    fatalError("memo is nil")}
                 //何も書かれていない場合はサーバーに送信しない
                 if memo.isEmpty {
                     let alert = UIAlertController.okAlert(title: "No Text", message: "Please input some text")

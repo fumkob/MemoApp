@@ -13,9 +13,9 @@ import RxCocoa
 public class ViewModel {
     //アラート場合分け
     public enum AlertType: Int {
-        case postSucceeded
-        case postFailed
-        case getFailed
+        case memoSaved
+        case postError
+        case getError
     }
     
     private let apiClient: APIClient
@@ -26,18 +26,19 @@ public class ViewModel {
     private let contentsEvent = PublishSubject<[MemoContents]>()
     public var contents: Driver<[MemoContents]> { return contentsEvent.asDriver(onErrorDriveWith: .empty()) }
     //アラート用
-    private let alertsEvent = PublishSubject<Int>()
-    public var alerts: Driver<Int> { return alertsEvent.asDriver(onErrorDriveWith: .empty()) }
+    private let alertsEvent = PublishSubject<AlertType>()
+    public var alerts: Driver<AlertType> { return alertsEvent.asDriver(onErrorDriveWith: .empty()) }
     
     private let disposeBag = DisposeBag()
+    private let url = URL(string: "http://localhost:3000/memos/")
     
     init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
     //投稿処理
     public func postMemo(memo: String) {
-        guard let url = URL(string: "http://localhost:3000/post/") else {
-            fatalError("url is nill")
+        guard let url = url else {
+            fatalError("url is nil")
         }
         //indicator開始
         indicatorStatusEvent.onNext(true)
@@ -45,10 +46,10 @@ public class ViewModel {
         apiClient.postData(url: url, memo: memo)
             .subscribe(onSuccess: { [weak self] result in
                 print(result)
-                self?.alertsEvent.onNext(AlertType.postSucceeded.rawValue)
+                self?.alertsEvent.onNext(.memoSaved)
             }, onError: {[weak self] error in
                 print(error)
-                self?.alertsEvent.onNext(AlertType.postFailed.rawValue)
+                self?.alertsEvent.onNext(.postError)
             })
             .disposed(by: disposeBag)
         //indicator終了
@@ -56,8 +57,8 @@ public class ViewModel {
     }
     //読み込み処理
     public func loadMemo() {
-        guard let url = URL(string: "http://localhost:3000/get/") else {
-            fatalError("url is nill")
+        guard let url = url else {
+            fatalError("url is nil")
         }
         //indicator開始
         indicatorStatusEvent.onNext(true)
@@ -67,7 +68,7 @@ public class ViewModel {
                 self?.contentsEvent.onNext(result)
             }, onError: { [weak self] error in
                 print(error)
-                self?.alertsEvent.onNext(AlertType.getFailed.rawValue)
+                self?.alertsEvent.onNext(.getError)
             })
             .disposed(by: disposeBag)
         //indicator終了
